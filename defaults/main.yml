@@ -14,11 +14,11 @@ cgminer_pools:
   -
     url: stratum+tcp://pool.ckpool.org:443
     user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
-    pass: cgminer_password
+    pass: "{{ cgminer_password }}"
   -
     url: stratum+tcp://solo.ckpool.org:443
     user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
-    pass: cgminer_password
+    pass: "{{ cgminer_password }}"
   - url: stratum+tcp://stratum.multipool.us:3360
     user: "{{ cgminer_user }}.{{ cgminer_worker_name }}"
-    pass: cgminer_password
+    pass: "{{ cgminer_password }}"
