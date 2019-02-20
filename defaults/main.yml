@@ -1,0 +1,23 @@
+---
+# defaults file for pi-install-cgminer
+cgminer_additional_config: ""
+cgminer_bitcoin_wallet: 18YuqAaQPc3nqK53iVV5eTZKoENcf5mKVi
+cgminer_worker_name: newpac
+cgminer_gekko_2pac_freq: 160.0
+cgminer_suggest_difficulty: 512
+cgminer_asic_boost: "true"
+cgminer_autostart: no
+cgminer_user: irmoobear
+cgminer_git_version: 3339a51e136be269125a74ece852ae81201bd528
+cgminer_pools:
+  -
+    url: stratum+tcp://pool.ckpool.org:443
+    user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
+    pass: x
+  -
+    url: stratum+tcp://solo.ckpool.org:443
+    user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
+    pass: x
+  - url: stratum+tcp://stratum.multipool.us:3360
+    user: "{{ cgminer_user }}.{{ cgminer_worker_name }}"
+    pass: x

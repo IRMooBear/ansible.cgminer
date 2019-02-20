@@ -1,0 +1,47 @@
+---
+# handlers file for pi-install-cgminer
+- name: run cgminer autogen
+  become: false
+  command: /bin/sh autogen.sh --enable-gekko {{ cgminer_additional_config }}
+  args:
+    chdir: /usr/local/src/cgminer
+  environment:
+    CFFLAGS: -02
+  when: cgminer_repo.changed
+- name: make cgminer
+  become: false
+  make:
+    params:
+      NUM_THREADS: ansible_processor_count
+  args:
+    chdir: /usr/local/src/cgminer
+  when: cgminer_repo.changed
+- name: install cgminer
+  become: true
+  make:
+    target: install
+  args:
+    chdir: /usr/local/src/cgminer
+  when: cgminer_repo.changed
+- name: add pi user to udev group
+  user:
+    name: pi
+    groups: plugdev
+    append: yes
+  when: cgminer_repo.changed
+- name: copy udev rule for cgminer
+  copy:
+    src: /usr/local/src/cgminer/01-cgminer.rules
+    dest: /etc/udev/rules.d/01-cgminer.rules
+    remote_src: yes
+  when: cgminer_repo.changed
+- name: autostart cgminer
+  systemd:
+    name: cgminer.service
+    enabled: yes
+  when: cgminer_autostart
+- name: restart cgminer
+  systemd:
+    name: cgminer.service
+    state: restarted
+  when: cgminer_autostart

@@ -1,0 +1,56 @@
+---
+# tasks file for pi-install-cgminer
+- name: install cgminer dependencies
+  retries: 3
+  delay: 10
+  apt:
+    state: present
+    name: [
+      'libusb-1.0-0-dev',
+      'libusb-1.0-0',
+      'libudev-dev',
+      'uthash-dev',
+      'libjansson-dev',
+      'libncurses5-dev'
+    ]
+- name: clone vthoang/cgminer
+  retries: 3
+  delay: 10
+  git:
+    repo: https://github.com/vthoang/cgminer.git
+    dest: /usr/local/src/cgminer
+    clone: yes
+    update: yes
+    recursive: yes
+    version: "{{ cgminer_git_version }}"
+  register: cgminer_repo
+- debug:
+    var: cgminer_repo
+- name: set pi user as owner of cgminer folder
+  file:
+    path: /usr/local/src/cgminer
+    owner: pi
+    recurse: true
+  notify:
+    - run cgminer autogen
+    - make cgminer
+    - install cgminer
+    - add pi user to udev group
+    - copy udev rule for cgminer
+- meta: flush_handlers
+- name: install cgminer template
+  template:
+    src: cgminer.conf.ini
+    dest: /etc/cgminer.conf
+    mode: 0755
+  notify:
+    - autostart cgminer
+    - restart cgminer
+- name: create cgminer systemctl service
+  template:
+    src: cgminer.service.ini
+    dest: /lib/systemd/system/cgminer.service
+    mode: 0755
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
