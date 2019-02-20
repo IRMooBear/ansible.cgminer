@@ -35,13 +35,3 @@
     dest: /etc/udev/rules.d/01-cgminer.rules
     remote_src: yes
   when: cgminer_repo.changed
-- name: autostart cgminer
-  systemd:
-    name: cgminer.service
-    enabled: yes
-  when: cgminer_autostart
-- name: restart cgminer
-  systemd:
-    name: cgminer.service
-    state: restarted
-  when: cgminer_autostart

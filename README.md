@@ -5,11 +5,16 @@ Pi Install CGMiner
 
 This role will compile cgminer with GekkoScience custom driver on a Raspberry Pi for use with the 2Pac or NewPac USB ASIC miners.
 
-Dependencies
-------------
+The install cgminer.service will run a persistent screen session under the pi user.  The screen session will not terminate if ssh is disconnected.
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
+To view the session
+```
+screen -r cgminer
+```
+To detach from the screen without quitting cgminer service
+```
+CTRL + A + D
+```
 Example Playbook
 ----------------
 

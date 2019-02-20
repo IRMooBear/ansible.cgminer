@@ -1,6 +1,6 @@
 galaxy_info:
   author: Anh Nguyen
-  description: Build CGminer to work with GekkoScience 2Pac & NewPac.
+  description: Build CGminer with GekkoScience's driver for 2Pac & NewPac SHA256 ASIC USB mining sticks.
   company: N/A
 
   # If the issue tracker for your role is not on github, uncomment the

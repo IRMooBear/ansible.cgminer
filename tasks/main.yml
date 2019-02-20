@@ -43,9 +43,6 @@
     src: cgminer.conf.ini
     dest: /etc/cgminer.conf
     mode: 0755
-  notify:
-    - autostart cgminer
-    - restart cgminer
 - name: create cgminer systemctl service
   template:
     src: cgminer.service.ini
@@ -54,3 +51,13 @@
 - name: reload systemd
   systemd:
     daemon_reload: yes
+- name: autostart cgminer
+  systemd:
+    name: cgminer.service
+    enabled: yes
+  when: cgminer_autostart
+- name: restart cgminer
+  systemd:
+    name: cgminer.service
+    state: restarted
+  when: cgminer_autostart
