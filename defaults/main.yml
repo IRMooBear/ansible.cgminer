@@ -1,5 +1,5 @@
 ---
-# defaults file for pi-install-cgminer
+# defaults file for pi_install_cgminer
 cgminer_additional_config: ""
 cgminer_bitcoin_wallet: 18YuqAaQPc3nqK53iVV5eTZKoENcf5mKVi
 cgminer_worker_name: newpac

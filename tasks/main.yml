@@ -1,5 +1,5 @@
 ---
-# tasks file for pi-install-cgminer
+# tasks file for pi_install_cgminer
 - name: install cgminer dependencies
   retries: 3
   delay: 10

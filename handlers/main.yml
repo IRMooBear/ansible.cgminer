@@ -1,5 +1,5 @@
 ---
-# handlers file for pi-install-cgminer
+# handlers file for pi_install_cgminer
 - name: run cgminer autogen
   become: false
   command: /bin/sh autogen.sh --enable-gekko {{ cgminer_additional_config }}

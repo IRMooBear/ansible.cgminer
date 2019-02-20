@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/IRMooBear/pi-install-cgminer.svg?branch=master)](https://travis-ci.com/IRMooBear/pi-install-cgminer)
+[![Build Status](https://travis-ci.com/IRMooBear/pi_install_cgminer.svg?branch=master)](https://travis-ci.com/IRMooBear/pi_install_cgminer)
 
 Pi Install CGMiner
 =========
