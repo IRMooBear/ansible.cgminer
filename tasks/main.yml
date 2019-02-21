@@ -1,8 +1,6 @@
 ---
 # tasks file for pi_install_cgminer
 - name: install cgminer dependencies
-  retries: 3
-  delay: 10
   apt:
     state: present
     name: [
@@ -13,9 +11,11 @@
       'libjansson-dev',
       'libncurses5-dev'
     ]
-- name: clone vthoang/cgminer
+  register: result
   retries: 3
   delay: 10
+  until: result.rc == 0
+- name: clone vthoang/cgminer
   git:
     repo: https://github.com/vthoang/cgminer.git
     dest: /usr/local/src/cgminer
@@ -24,6 +24,9 @@
     recursive: yes
     version: "{{ cgminer_git_version }}"
   register: cgminer_repo
+  retries: 3
+  delay: 10
+  until: cgminer_repo.rc == 0
 - debug:
     var: cgminer_repo
 - name: set pi user as owner of cgminer folder
