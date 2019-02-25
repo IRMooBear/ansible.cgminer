@@ -47,7 +47,7 @@
   become: false
   make:
     params:
-      NUM_THREADS: ansible_processor_count
+      NUM_THREADS: "{{ ansible_processor_cores }}"
   args:
     chdir: /usr/local/src/cgminer
   when: cgminer_repo.changed
@@ -86,8 +86,7 @@
 - name: autostart cgminer
   systemd:
     name: cgminer.service
-    enabled: yes
-  when: cgminer_autostart
+    enabled: "{% if cgminer_autostart%}yes{% else %}no{% endif %}"
 - name: restart cgminer
   systemd:
     name: cgminer.service
