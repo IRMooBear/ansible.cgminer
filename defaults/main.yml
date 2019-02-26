@@ -4,6 +4,7 @@ cgminer_additional_config: ""
 cgminer_bitcoin_wallet: 18YuqAaQPc3nqK53iVV5eTZKoENcf5mKVi
 cgminer_worker_name: newpac
 cgminer_gekko_2pac_freq: 160.0
+cgminer_gekko_newpac_freq: 125
 cgminer_suggest_difficulty: 512
 cgminer_asic_boost: "true"
 cgminer_autostart: no

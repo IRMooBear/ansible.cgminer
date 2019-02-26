@@ -28,8 +28,6 @@
   retries: 3
   delay: 10
   until: not cgminer_repo.failed
-- debug:
-    var: cgminer_repo
 - name: set pi user as owner of cgminer folder
   file:
     path: /usr/local/src/cgminer
