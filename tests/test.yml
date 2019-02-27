@@ -2,4 +2,4 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - pi_install_cgminer
+    - install_cgminer
