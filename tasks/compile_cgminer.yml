@@ -1,0 +1,38 @@
+---
+- name: run cgminer autogen
+  become: false
+  command: /bin/sh autogen.sh --enable-gekko {{ cgminer_additional_config }}
+  args:
+    chdir: /usr/local/src/cgminer
+  environment:
+    CFFLAGS: -02
+- name: make cgminer
+  become: false
+  make:
+    params:
+      NUM_THREADS: "{{ ansible_processor_cores }}"
+  args:
+    chdir: /usr/local/src/cgminer
+- name: install cgminer
+  become: true
+  make:
+    target: install
+  args:
+    chdir: /usr/local/src/cgminer
+- name: add user to udev group
+  user:
+    name: "{{ ansible_user }}"
+    groups: plugdev
+    append: yes
+- name: copy udev rule for cgminer
+  copy:
+    src: /usr/local/src/cgminer/01-cgminer.rules
+    dest: /etc/udev/rules.d/01-cgminer.rules
+    remote_src: yes
+- name: create cgminer systemctl service
+  template:
+    src: cgminer.service.ini
+    dest: /lib/systemd/system/cgminer.service
+    mode: 0755
+  notify:
+    - reload systemd

@@ -1,21 +1,13 @@
 ---
 # tasks file for pi_install_cgminer
-- name: install cgminer dependencies
-  apt:
-    state: present
-    name: [
-      'libusb-1.0-0-dev',
-      'libusb-1.0-0',
-      'libudev-dev',
-      'uthash-dev',
-      'libjansson-dev',
-      'libncurses5-dev',
-      'libcurl4-gnutls-dev'
-    ]
-  register: result
-  retries: 3
-  delay: 10
-  until: not result.failed
+- name: check cgminer exists
+  stat:
+    path: /usr/local/bin/cgminer
+  register: cgminer_check
+- include: Debian.yml
+  when: ansible_os_family == 'Debian'
+- include: RedHat.yml
+  when: ansible_os_family == 'RedHat'
 - name: clone vthoang/cgminer
   git:
     repo: https://github.com/vthoang/cgminer.git
@@ -28,65 +20,22 @@
   retries: 3
   delay: 10
   until: not cgminer_repo.failed
-- name: set pi user as owner of cgminer folder
+- name: set user as owner of cgminer folder
   file:
     path: /usr/local/src/cgminer
-    owner: pi
+    owner: "{{ ansible_user }}"
     recurse: true
-- name: run cgminer autogen
-  become: false
-  command: /bin/sh autogen.sh --enable-gekko {{ cgminer_additional_config }}
-  args:
-    chdir: /usr/local/src/cgminer
-  environment:
-    CFFLAGS: -02
-  when: cgminer_repo.changed
-- name: make cgminer
-  become: false
-  make:
-    params:
-      NUM_THREADS: "{{ ansible_processor_cores }}"
-  args:
-    chdir: /usr/local/src/cgminer
-  when: cgminer_repo.changed
-- name: install cgminer
-  become: true
-  make:
-    target: install
-  args:
-    chdir: /usr/local/src/cgminer
-  when: cgminer_repo.changed
-- name: add pi user to udev group
-  user:
-    name: pi
-    groups: plugdev
-    append: yes
-  when: cgminer_repo.changed
-- name: copy udev rule for cgminer
-  copy:
-    src: /usr/local/src/cgminer/01-cgminer.rules
-    dest: /etc/udev/rules.d/01-cgminer.rules
-    remote_src: yes
-  when: cgminer_repo.changed
+- include: compile_cgminer.yml
+  when: cgminer_repo.before != cgminer_repo.after
 - name: install cgminer template
   template:
     src: cgminer.conf.ini
     dest: /etc/cgminer.conf
     mode: 0755
-- name: create cgminer systemctl service
-  template:
-    src: cgminer.service.ini
-    dest: /lib/systemd/system/cgminer.service
-    mode: 0755
-- name: reload systemd
-  systemd:
-    daemon_reload: yes
+  register: cgminer_template_update
+  notify:
+    - restart cgminer
 - name: autostart cgminer
   systemd:
     name: cgminer.service
-    enabled: "{% if cgminer_autostart%}yes{% else %}no{% endif %}"
-- name: restart cgminer
-  systemd:
-    name: cgminer.service
-    state: restarted
-  when: cgminer_autostart
+    enabled: "{{ cgminer_autostart }}"

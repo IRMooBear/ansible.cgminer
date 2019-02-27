@@ -1,2 +1,9 @@
 ---
 # handlers file for pi_install_cgminer
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+- name: restart cgminer
+  systemd:
+    name: cgminer.service
+    state: "{{ 'restarted' if cgminer_autostart else 'stopped' }}"
