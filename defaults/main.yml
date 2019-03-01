@@ -1,5 +1,6 @@
 ---
 # defaults file for pi_install_cgminer
+compile_threads: "{{ ansible_processor_cores }}"
 cgminer_additional_config: ""
 cgminer_bitcoin_wallet: 18YuqAaQPc3nqK53iVV5eTZKoENcf5mKVi
 cgminer_worker_name: newpac

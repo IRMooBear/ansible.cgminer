@@ -10,7 +10,7 @@
   become: false
   make:
     params:
-      NUM_THREADS: "{{ ansible_processor_cores }}"
+      NUM_THREADS: "{{ compile_threads }}"
   args:
     chdir: /usr/local/src/cgminer
 - name: install cgminer
