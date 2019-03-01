@@ -29,10 +29,3 @@
     src: /usr/local/src/cgminer/01-cgminer.rules
     dest: /etc/udev/rules.d/01-cgminer.rules
     remote_src: yes
-- name: create cgminer systemctl service
-  template:
-    src: cgminer.service.ini
-    dest: /lib/systemd/system/cgminer.service
-    mode: 0755
-  notify:
-    - reload systemd

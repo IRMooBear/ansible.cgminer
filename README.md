@@ -1,11 +1,11 @@
 [![Build Status](https://travis-ci.com/IRMooBear/pi_install_cgminer.svg?branch=master)](https://travis-ci.com/IRMooBear/pi_install_cgminer)
 
-Pi Install CGMiner
+Install CGMiner on RPI
 =========
 
-This role will compile cgminer with GekkoScience custom driver on a Raspberry Pi for use with the 2Pac or NewPac USB ASIC miners.
+This role will compile CGMiner with GekkoScience custom driver on a Raspberry Pi for use with the 2Pac or NewPac USB ASIC miners.
 
-The install cgminer.service will run a persistent screen session under the pi user.  The screen session will not terminate if ssh is disconnected.
+The installed cgminer.service will run a persistent screen session under the pi user.  The screen session will not terminate if ssh is disconnected.
 
 To view the session
 ```
@@ -22,7 +22,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: irmoobear.pi_install_cgminer }
+         - { role: irmoobear.install_cgminer }
 
 License
 -------
