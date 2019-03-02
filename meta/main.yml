@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: cgminer
   author: Anh Nguyen
   description: Build CGminer with GekkoScience's driver for 2Pac & NewPac SHA256 ASIC USB mining sticks.
   company: N/A
