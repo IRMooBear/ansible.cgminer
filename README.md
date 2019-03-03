@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/IRMooBear/install_cgminer.svg?branch=master)](https://travis-ci.com/IRMooBear/install_cgminer)
+[![Build Status](https://travis-ci.com/IRMooBear/ansible.cgminer.svg?branch=master)](https://travis-ci.com/IRMooBear/ansible.cgminer)
 
 Install CGMiner on RPI
 =========
