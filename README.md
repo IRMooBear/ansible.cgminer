@@ -107,7 +107,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: irmoobear.install_cgminer }
+         - { role: irmoobear.cgminer }
 
 License
 -------
