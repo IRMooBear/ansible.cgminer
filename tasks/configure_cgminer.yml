@@ -1,0 +1,20 @@
+---
+- name: create cgminer systemctl service
+  template:
+    src: cgminer.service.ini
+    dest: /lib/systemd/system/{{ item.name }}.service
+    mode: 0644
+  notify:
+    - reload systemd
+    - restart cgminer
+- name: install cgminer template
+  template:
+    src: cgminer.conf.ini
+    dest: /etc/{{ item.name }}.conf
+    mode: 0644
+  notify:
+    - restart cgminer
+- name: autostart cgminer
+  systemd:
+    name: "{{ item.name }}.service"
+    enabled: "{{ cgminer_autostart }}"

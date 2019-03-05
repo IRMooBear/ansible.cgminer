@@ -16,6 +16,10 @@ To detach from the screen without quitting cgminer service
 CTRL + A + D
 ```
 
+Dependencies
+----------------
+This role build CGMiner from https://github.com/vthoang/cgminer 
+
 Variables
 ----------------
     compile_threads: "{{ ansible_processor_cores }}"
@@ -73,25 +77,33 @@ Your mining authentication.
         
 Git version to pull for compile.    
     
-    cgminer_pools:
+    cgminer_config:
       -
-        url: stratum+tcp://pool.ckpool.org:443
-        user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
-        pass: "{{ cgminer_password }}"
-      -
-        url: stratum+tcp://solo.ckpool.org:443
-        user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
-        pass: "{{ cgminer_password }}"
-      -
-        url: stratum+tcp://stratum.multipool.us:3360
-        user: "{{ cgminer_user }}.{{ cgminer_worker_name }}"
-        pass: "{{ cgminer_password }}"
+        name: cgminer
+        usb:
+        gekko_newpac_freq: 100
+        gekko_newpac_freq: 125
+        suggest_difficulty: 512
+        port: 4028
+        pools:
+          -
+            url: stratum+tcp://pool.ckpool.org:443
+            user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
+            pass: "{{ cgminer_password }}"
+          -
+            url: stratum+tcp://solo.ckpool.org:443
+            user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
+            pass: "{{ cgminer_password }}"
 
-Variable for the template to generate configuration file.  Customize with your own pool settings.
+Configuration and service generator.  The config will create a service called cgminer.
+This is a list and additional configurators can be added such as cgminer2, cgminer3, etc... to support multiple
+instances of CGMiner services running on the system.  Don't forget to change the port number and usb limiter if you
+run multiple instances.
 
 Example Playbook
 ----------------
 1. Set authentications and pools first before running!
+
 
     - hosts: servers
       roles:

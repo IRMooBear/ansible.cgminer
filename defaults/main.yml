@@ -16,16 +16,19 @@ cgminer_autostart: no
 cgminer_user: irmoobear
 cgminer_password: x
 cgminer_git_version: 3339a51e136be269125a74ece852ae81201bd528
-cgminer_pools:
+cgminer_config:
   -
-    url: stratum+tcp://pool.ckpool.org:443
-    user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
-    pass: "{{ cgminer_password }}"
-  -
-    url: stratum+tcp://solo.ckpool.org:443
-    user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
-    pass: "{{ cgminer_password }}"
-  -
-    url: stratum+tcp://stratum.multipool.us:3360
-    user: "{{ cgminer_user }}.{{ cgminer_worker_name }}"
-    pass: "{{ cgminer_password }}"
+    name: cgminer
+    usb:
+    gekko_newpac_freq: 100
+    suggest_difficulty: 512
+    port: 4028
+    pools:
+      -
+        url: stratum+tcp://pool.ckpool.org:443
+        user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
+        pass: "{{ cgminer_password }}"
+      -
+        url: stratum+tcp://solo.ckpool.org:443
+        user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
+        pass: "{{ cgminer_password }}"

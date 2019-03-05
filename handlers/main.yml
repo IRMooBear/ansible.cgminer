@@ -5,5 +5,6 @@
     daemon_reload: yes
 - name: restart cgminer
   systemd:
-    name: cgminer.service
+    name: "{{ item.name }}"
     state: "{{ 'restarted' if cgminer_autostart else 'stopped' }}"
+  with_items: "{{ cgminer_config }}"

@@ -27,23 +27,6 @@
     recurse: true
 - include: compile_cgminer.yml
   when: not cgminer_check.stat.exists or cgminer_repo.before != cgminer_repo.after
-- name: create cgminer systemctl service
-  template:
-    src: cgminer.service.ini
-    dest: /lib/systemd/system/cgminer.service
-    mode: 0755
-  notify:
-    - reload systemd
-    - restart cgminer
-- name: install cgminer template
-  template:
-    src: cgminer.conf.ini
-    dest: /etc/cgminer.conf
-    mode: 0755
-  register: cgminer_template_update
-  notify:
-    - restart cgminer
-- name: autostart cgminer
-  systemd:
-    name: cgminer.service
-    enabled: "{{ cgminer_autostart }}"
+- include: configure_cgminer.yml
+  with_items:
+    - "{{ cgminer_config }}"
