@@ -4,31 +4,33 @@ compile_threads: "{{ ansible_processor_cores }}"
 cgminer_additional_config: ""
 cgminer_bitcoin_wallet: 18YuqAaQPc3nqK53iVV5eTZKoENcf5mKVi
 cgminer_worker_name: newpac
-cgminer_gekko_2pac_freq: 125.0
+
 cgminer_gekko_start_freq: 100
 cgminer_gekko_step_freq: 25
 cgminer_gekko_step_delay: 30
-cgminer_gekko_newpac_freq: 125
-cgminer_gekko_newpac_core: 400
 cgminer_suggest_difficulty: 512
-cgminer_asic_boost: "true"
 cgminer_autostart: no
 cgminer_user: irmoobear
 cgminer_password: x
 cgminer_git_version: 3339a51e136be269125a74ece852ae81201bd528
+cgminer_api_allow: W:192.168.1.0/24,W:127.0.0.1
 cgminer_config:
-  -
-    name: cgminer
+  - name: cgminer
     usb:
-    gekko_newpac_freq: 100
+    gekko_2pac_freq: 125.0
+    geeko_2pac_detect: no
+    gekko_newpac_freq: 125
+    gekko_newpac_core: 400
+    gekko_newpac_detect: no
+    gekko_asic_boost: no
     suggest_difficulty: 512
     port: 4028
+    user:
+    password:
     pools:
-      -
-        url: stratum+tcp://pool.ckpool.org:443
+      - url: stratum+tcp://pool.ckpool.org:443
         user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
-        pass: "{{ cgminer_password }}"
-      -
-        url: stratum+tcp://solo.ckpool.org:443
+        password: "{{ cgminer_password }}"
+      - url: stratum+tcp://solo.ckpool.org:443
         user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
-        pass: "{{ cgminer_password }}"
+        password: "{{ cgminer_password }}"

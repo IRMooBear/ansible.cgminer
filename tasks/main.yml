@@ -4,10 +4,6 @@
   stat:
     path: /usr/local/bin/cgminer
   register: cgminer_check
-- include: Debian.yml
-  when: ansible_os_family == 'Debian'
-- include: RedHat.yml
-  when: ansible_os_family == 'RedHat'
 - name: clone vthoang/cgminer
   git:
     repo: https://github.com/vthoang/cgminer.git
@@ -25,8 +21,8 @@
     path: /usr/local/src/cgminer
     owner: "{{ ansible_user }}"
     recurse: true
-- include: compile_cgminer.yml
+- import_tasks: compile_cgminer.yml
   when: not cgminer_check.stat.exists or cgminer_repo.before != cgminer_repo.after
-- include: configure_cgminer.yml
+- include_tasks: configure_cgminer.yml
   with_items:
     - "{{ cgminer_config }}"

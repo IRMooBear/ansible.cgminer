@@ -3,6 +3,8 @@
   template:
     src: cgminer.service.ini
     dest: /lib/systemd/system/{{ item.name }}.service
+    owner: root
+    group: root
     mode: 0644
   notify:
     - reload systemd
@@ -11,6 +13,8 @@
   template:
     src: cgminer.conf.ini
     dest: /etc/{{ item.name }}.conf
+    owner: root
+    group: root
     mode: 0644
   notify:
     - restart cgminer

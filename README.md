@@ -89,11 +89,11 @@ Git version to pull for compile.
           -
             url: stratum+tcp://pool.ckpool.org:443
             user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
-            pass: "{{ cgminer_password }}"
+            password: "{{ cgminer_password }}"
           -
             url: stratum+tcp://solo.ckpool.org:443
             user: "{{ cgminer_bitcoin_wallet }}.{{ cgminer_worker_name }}"
-            pass: "{{ cgminer_password }}"
+            password: "{{ cgminer_password }}"
 
 Configuration and service generator.  The config will create a service called cgminer.
 This is a list and additional configurators can be added such as cgminer2, cgminer3, etc... to support multiple

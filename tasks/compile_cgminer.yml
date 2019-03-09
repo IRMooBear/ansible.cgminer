@@ -1,4 +1,8 @@
 ---
+- import_tasks: Debian.yml
+  when: ansible_os_family == 'Debian'
+- import_tasks: RedHat.yml
+  when: ansible_os_family == 'RedHat'
 - name: run cgminer autogen
   become: false
   command: /bin/sh autogen.sh --enable-gekko {{ cgminer_additional_config }}
@@ -29,4 +33,7 @@
   copy:
     src: /usr/local/src/cgminer/01-cgminer.rules
     dest: /etc/udev/rules.d/01-cgminer.rules
+    owner: root
+    group: root
+    mode: 0644
     remote_src: yes
