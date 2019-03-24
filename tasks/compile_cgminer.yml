@@ -4,14 +4,14 @@
 - import_tasks: RedHat.yml
   when: ansible_os_family == 'RedHat'
 - name: run cgminer autogen
-  become: false
+  become: no
   command: /bin/sh autogen.sh --enable-gekko {{ cgminer_additional_config }}
   args:
     chdir: /usr/local/src/cgminer
   environment:
     CFFLAGS: -02
 - name: make cgminer
-  become: false
+  become: no
   make:
     params:
       MAKEFLAGS: -j{{ compile_threads }}
@@ -19,17 +19,19 @@
   args:
     chdir: /usr/local/src/cgminer
 - name: install cgminer
-  become: true
+  become: yes
   make:
     target: install
   args:
     chdir: /usr/local/src/cgminer
 - name: add user to udev group
+  become: yes
   user:
     name: "{{ ansible_user }}"
     groups: plugdev
     append: yes
 - name: copy udev rule for cgminer
+  become: yes
   copy:
     src: /usr/local/src/cgminer/01-cgminer.rules
     dest: /etc/udev/rules.d/01-cgminer.rules

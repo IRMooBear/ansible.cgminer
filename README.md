@@ -67,6 +67,10 @@ Turn on/off ASIC boost, must include quote.
     cgminer_autostart: no
     
 Start CGMiner on system boot.
+
+    cgminer_after: bfgminer.service
+ 
+Start the CGMiner server after BFGMiner in case both are run on the same system.
     
     cgminer_user: irmoobear
     cgminer_password: x

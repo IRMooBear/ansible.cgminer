@@ -1,9 +1,11 @@
 ---
 # handlers file for pi_install_cgminer
 - name: reload systemd
+  become: yes
   systemd:
     daemon_reload: yes
 - name: restart cgminer
+  become: yes
   systemd:
     name: "{{ item.name }}"
     state: "{{ 'restarted' if cgminer_autostart else 'stopped' }}"

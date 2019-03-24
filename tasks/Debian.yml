@@ -1,5 +1,6 @@
 ---
 - name: install cgminer dependencies
+  become: yes
   apt:
     state: present
     name: [

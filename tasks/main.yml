@@ -5,6 +5,7 @@
     path: /usr/local/bin/cgminer
   register: cgminer_check
 - name: clone vthoang/cgminer
+  become: yes
   git:
     repo: https://github.com/vthoang/cgminer.git
     dest: /usr/local/src/cgminer
@@ -17,6 +18,7 @@
   delay: 10
   until: not cgminer_repo.failed
 - name: set user as owner of cgminer folder
+  become: yes
   file:
     path: /usr/local/src/cgminer
     owner: "{{ ansible_user }}"
